@@ -1,6 +1,6 @@
 """
 Use:
-python train_test_split.py -i [PATH_TO_IMAGES_FOLDER]
+python .\helpers\train_test_split.py -i [PATH_TO_IMAGES_FOLDER]
 """
  
 import os
