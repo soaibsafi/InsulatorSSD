@@ -11,12 +11,12 @@ import fnmatch
 import random
 
 
-GOOD_CONF_DIR = "AugmentedImages/Good/"
-AVERAGE_CONF_DIR = "AugmentedImages/Average/"
-BAD_CONF_DIR = "AugmentedImages/Bad/"
-LAB_CONF_DIR = "AugmentedImages/Lab/"
+GOOD_CONF_DIR = "/content/data/Good/"
+AVERAGE_CONF_DIR = "/content/data/Average/"
+BAD_CONF_DIR = "/content/data/Bad/"
+LAB_CONF_DIR = "/content/data//Lab/"
 #TRAINING_DATA_DIR = "data/Insulator/"
-ROOT_DIR = "data/"
+ROOT_DIR = "/content/data/"
 
 
 def get_total_images(path):
