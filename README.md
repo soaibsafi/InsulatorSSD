@@ -2,14 +2,14 @@
 
 ## Split the dataset
 ```
-python .\helpers\train_test_split.py -i .\data\
+python .\helpers\active_learning.py -i .\AugmentedImages\ -I
 ```
 
 ## Create csv from the xml annotation
 ```
 python .\helpers\xml_to_csv.py -i .\data\train -o .\data\record\train_labels.csv -l .\data\record\
 
-python .\helpers\xml_to_csv.py -i .\data\test -o .\data\record\test_labels.csv `
+python .\helpers\xml_to_csv.py -i .\data\test -o .\data\record\test_labels.csv
 ```
 
 ## Gererate tfrecord

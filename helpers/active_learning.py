@@ -87,7 +87,7 @@ def train_test_split(selected_files):
     # Creating partitions of the data after shuffeling
     val_ratio = 0.20
     test_ratio = 0.10
-
+    np.random.shuffle(selected_files)
     train_FileNames, val_FileNames, test_FileNames = np.split(np.array(selected_files),
                                                           [int(len(selected_files)* (1 - (val_ratio + test_ratio))), 
                                                            int(len(selected_files)* (1 - test_ratio))])
@@ -97,7 +97,19 @@ def train_test_split(selected_files):
     print('Validation: ', len(val_FileNames))
     print('Testing: ', len(test_FileNames))
 
-    # Copy-pasting images
+    # with open('./log/train.txt', 'w') as f:
+    #     for name in train_FileNames:
+    #         f.write("%s\n" % name)
+
+    # with open('./log/validation.txt', 'w') as f:
+    #     for name in val_FileNames:
+    #         f.write("%s\n" % name)
+    # with open('./log/test.txt', 'w') as f:
+
+    #     for name in test_FileNames:
+    #         f.write("%s\n" % name)
+
+    # Move the images
     for name in train_FileNames:
         shutil.move(name + '.jpg', ROOT_DIR +'train/')
         shutil.move(name + '.xml', ROOT_DIR +'train/')
