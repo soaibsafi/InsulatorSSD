@@ -164,8 +164,6 @@ def main():
     print('Validation: ', get_total_images(ROOT_DIR +'validation/'))
     print('Testing: ', get_total_images(ROOT_DIR +'test/'))
     print("-------------------------")
-    print('Remaining Images: ', get_total_images('AugmentedImages/'))
-    print("-------------------------")
 
 
 
