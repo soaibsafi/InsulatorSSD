@@ -4,6 +4,8 @@ python .\helpers\train_test_split.py -i [PATH_TO_IMAGES_FOLDER]
 """
  
 import os
+import time
+import glob
 import shutil
 import numpy as np
 import argparse
@@ -15,8 +17,8 @@ GOOD_CONF_DIR = "/content/data/Good/"
 AVERAGE_CONF_DIR = "/content/data/Average/"
 BAD_CONF_DIR = "/content/data/Bad/"
 LAB_CONF_DIR = "/content/data//Lab/"
-#TRAINING_DATA_DIR = "data/Insulator/"
 ROOT_DIR = "/content/data/"
+INITIAL_SPLIT = True
 
 
 def get_total_images(path):
@@ -67,22 +69,53 @@ def split_ratio(selected_for_training):
 
     return good_conf_files+avg_conf_files+bad_conf_files+lab_conf_files
 
-def move_selected_data(selected_files):
-    # for dir in selected_files:
-    #     for item in dir:
-    #         shutil.move(item + '.jpg', TRAINING_DATA_DIR)
-    #         shutil.move(item + '.xml', TRAINING_DATA_DIR)
+def write_selected_files(train_fileames, val_fileames, test_fileames):
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+    with open(ROOT_DIR +'train_'+timestr+'.txt', 'w') as f:
+        for name in train_fileames:
+            f.write("%s\n" % name)
+    with open(ROOT_DIR +'validation_'+timestr+'.txt', 'w') as f:
+        for name in val_fileames:
+            f.write("%s\n" % name)
+    with open(ROOT_DIR +'test_'+timestr+'.txt', 'w') as f:
+        for name in test_fileames:
+            f.write("%s\n" % name)
+        
 
-    with open('log\selected_files2.txt', 'w') as f:
-        for dir in selected_files:
-            for item in dir:
-                f.write("%s\n" % item)
+def copy_selected_data():
+    trainfile_list = glob.glob(os.path.join(ROOT_DIR, 'train_*.txt'))
+    trainfiles = []
+    for file in trainfile_list:
+        with open(file, 'r') as f:
+            trainfiles += f.read().splitlines()
+    
+    validationfile_list = glob.glob(os.path.join(ROOT_DIR, 'validation_*.txt'))
+    validationfiles = []
+    for file in validationfile_list:
+        with open(file, 'r') as f:
+            validationfiles += f.read().splitlines()
+    
+    testfile_list = glob.glob(os.path.join(ROOT_DIR, 'test_*.txt'))
+    testfiles = []
+    for file in testfile_list:
+        with open(file, 'r') as f:
+            testfiles += f.read().splitlines()
+
+    for item in trainfiles:
+            shutil.move(item + '.jpg', ROOT_DIR +'train/')
+            shutil.move(item + '.xml', ROOT_DIR +'train/')
+    for item in validationfiles:
+            shutil.move(item + '.jpg', ROOT_DIR +'validation/')
+            shutil.move(item + '.xml', ROOT_DIR +'validation/')
+    for item in testfiles:
+            shutil.move(item + '.jpg', ROOT_DIR +'test/')
+            shutil.move(item + '.xml', ROOT_DIR +'test/')
+
 
 def train_test_split(selected_files):
     os.makedirs(ROOT_DIR +'train/', exist_ok=True)
     os.makedirs(ROOT_DIR +'validation/', exist_ok=True)
     os.makedirs(ROOT_DIR +'test/', exist_ok=True)
-
 
     # Creating partitions of the data after shuffeling
     val_ratio = 0.20
@@ -97,33 +130,11 @@ def train_test_split(selected_files):
     print('Validation: ', len(val_FileNames))
     print('Testing: ', len(test_FileNames))
 
-    # with open('./log/train.txt', 'w') as f:
-    #     for name in train_FileNames:
-    #         f.write("%s\n" % name)
-
-    # with open('./log/validation.txt', 'w') as f:
-    #     for name in val_FileNames:
-    #         f.write("%s\n" % name)
-    # with open('./log/test.txt', 'w') as f:
-
-    #     for name in test_FileNames:
-    #         f.write("%s\n" % name)
-
-    # Move the images
-    for name in train_FileNames:
-        shutil.move(name + '.jpg', ROOT_DIR +'train/')
-        shutil.move(name + '.xml', ROOT_DIR +'train/')
-
-    for name in val_FileNames:
-        shutil.move(name + '.jpg', ROOT_DIR +'validation/')
-        shutil.move(name + '.xml', ROOT_DIR +'validation/')
-
-    for name in test_FileNames:
-        shutil.move(name + '.jpg', ROOT_DIR +'test/')
-        shutil.move(name + '.xml', ROOT_DIR +'test/')
+    write_selected_files(train_FileNames, val_FileNames, test_FileNames)
 
 
 def main():
+    global INITIAL_SPLIT
     # Initiate argument parser
     parser = argparse.ArgumentParser(
         description="Split the dataset into train, test and validation directory"
@@ -148,15 +159,19 @@ def main():
     print("Total Images: ",total_images)
 
     if args.initialSplit:
+        INITIAL_SPLIT = True
         selection_ratio = 0.15
     else:
+        INITIAL_SPLIT = False
         selection_ratio = 0.04
+    
 
     selected_for_training = int(total_images * selection_ratio)
     print("Selected for Training: ",selected_for_training)
 
     selected_files = split_ratio(selected_for_training)
     train_test_split(selected_files)
+    copy_selected_data()
 
     print("-------------------------")
     print("Split Successful. Current details-")
@@ -164,9 +179,6 @@ def main():
     print('Validation: ', get_total_images(ROOT_DIR +'validation/'))
     print('Testing: ', get_total_images(ROOT_DIR +'test/'))
     print("-------------------------")
-
-
-
 
 
 if __name__ == "__main__":
