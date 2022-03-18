@@ -60,21 +60,10 @@ def load_image_into_numpy_array(path):
 
 
 for image_path in IMAGE_PATHS:
-    #print('Running inference for {}... '.format(image_path), end='')
-
     image_np = load_image_into_numpy_array(image_path)
 
     height, width, color = image_np.shape
 
-    # Things to try:
-    # Flip horizontally
-    # image_np = np.fliplr(image_np).copy()
-
-    # Convert image to grayscale
-    # image_np = np.tile(
-    #     np.mean(image_np, 2, keepdims=True), (1, 1, 3)).astype(np.uint8)
-
-    # The input needs to be a tensor, convert it using `tf.convert_to_tensor`.
     input_tensor = tf.convert_to_tensor(image_np)
     # The model expects a batch of images, so add an axis with `tf.newaxis`.
     input_tensor = input_tensor[tf.newaxis, ...]
@@ -100,26 +89,6 @@ for image_path in IMAGE_PATHS:
       ll.append(detections['detection_scores'][i])
       pre_df =pd.DataFrame([{'filename':ll[0],'width':ll[1],'height':ll[2],'class':ll[4],'xmin':ll[3][1] * width,'ymin':ll[3][0] * height,'xmax':ll[3][3] * width,'ymax':ll[3][2] * height,'score':ll[5]}])
       test_pred = pd.concat([test_pred,pre_df],axis=0)
-      print('Done')
 
     test_pred.to_csv("data/record/test_pred.csv",index=False)
-
-    detections['num_detections'] = num_detections
-    # detection_classes should be ints.
-    # detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
-    # image_np_with_detections = image_np.copy()
-    # viz_utils.visualize_boxes_and_labels_on_image_array(
-    #       image_np_with_detections,
-    #       detections['detection_boxes'],
-    #       detections['detection_classes'],
-    #       detections['detection_scores'],
-    #       category_index,
-    #       use_normalized_coordinates=True,
-    #       max_boxes_to_draw=200,
-    #       min_score_thresh=.30,
-    #       agnostic_mode=False)
-
-    # cv2.imshow('object detection', cv2.resize(image_np_with_detections, (800, 600)))
-
-    # if cv2.waitKey(25) & 0xFF == ord('q'):
-    #     break
+    print('Detection record is crested at data/record/test_pred.csv')
