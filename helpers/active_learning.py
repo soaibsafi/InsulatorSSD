@@ -13,7 +13,7 @@ import fnmatch
 import random
 
 GOOD_CONF_DIR = "/content/data/AugmentedImages/Good/"
-AVERAGE_CONF_DIR = "/content/data/AugmentedImages/Average"
+AVERAGE_CONF_DIR = "/content/data/AugmentedImages/Average/"
 BAD_CONF_DIR = "/content/data/AugmentedImages/Bad/"
 LAB_CONF_DIR = "/content/data/AugmentedImages/Lab/"
 ROOT_DIR = "/content/data/"
