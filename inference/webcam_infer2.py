@@ -46,7 +46,7 @@ def VideoSrcInit(paath):
 
 def main():
   PATH_TO_LABELS = "data/record/label_map.pbtxt"
-  Model_Path = "data/model2.tflite"
+  Model_Path = "data/model.tflite"
   input_path = "video.mp4"
 
   ##Loading labels
@@ -75,9 +75,8 @@ def main():
     tf.image.convert_image_dtype(image, dtype=np.uint8, saturate=False, name=None)
 
     ##Converting image into tensor
-    image_tensor = read_tensor_from_readed_frame(image ,300, 300)
+    image_tensor = read_tensor_from_readed_frame(image ,320, 320)
     #print(image_tensor)
-    input_data = np.array(np.random.random_sample(input_shape), dtype=np.uint8)
 
 
     ##Test model

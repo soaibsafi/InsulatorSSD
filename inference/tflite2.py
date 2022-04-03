@@ -3,6 +3,8 @@ import tensorflow as tf
 import cv2
 import time
 print(tf.__version__)
+# Read label map -> TF2 changes
+
 
 Model_Path = "data/model.tflite"
 Video_path = "C:/MachineLearning/CV/Object_Tracking/video2.mp4"
