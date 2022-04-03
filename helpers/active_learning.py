@@ -12,18 +12,11 @@ import argparse
 import fnmatch
 import random
 
-GOOD_CONF_DIR = "AugmentedImages/Good/"
-AVERAGE_CONF_DIR = "AugmentedImages/Average/"
-BAD_CONF_DIR = "AugmentedImages/Bad/"
-LAB_CONF_DIR = "AugmentedImages/Lab/"
-ROOT_DIR = "data/"
-
-
-# GOOD_CONF_DIR = "/content/data/Good/"
-# AVERAGE_CONF_DIR = "/content/data/Average/"
-# BAD_CONF_DIR = "/content/data/Bad/"
-# LAB_CONF_DIR = "/content/data//Lab/"
-# ROOT_DIR = "/content/data/"
+GOOD_CONF_DIR = "/content/data/AugmentedImages/Good/"
+AVERAGE_CONF_DIR = "/content/data/AugmentedImages/Average/"
+BAD_CONF_DIR = "/content/data/AugmentedImages/Bad/"
+LAB_CONF_DIR = "/content/data/AugmentedImages/Lab/"
+ROOT_DIR = "/content/data/"
 INITIAL_SPLIT = True
 
 
