@@ -18,6 +18,7 @@ BAD_CONF_DIR = "/content/data/AugmentedImages/Bad/"
 LAB_CONF_DIR = "/content/data/AugmentedImages/Lab/"
 ROOT_DIR = "/content/data/"
 INITIAL_SPLIT = True
+ITERATION = 0
 
 
 def get_total_images(path):
@@ -76,7 +77,7 @@ def split_ratio(selected_for_training):
 
 def write_selected_files(train_fileames, val_fileames, test_fileames):
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    with open(ROOT_DIR +'train_'+timestr+'.txt', 'w') as f:
+    with open(ROOT_DIR +'train_iter'+timestr+'.txt', 'w') as f:
         for name in train_fileames:
             f.write("%s\n" % name)
     with open(ROOT_DIR +'validation_'+timestr+'.txt', 'w') as f:
@@ -142,19 +143,20 @@ def train_test_split(selected_files):
 
 def main():
     global INITIAL_SPLIT
+    global ITERATION
     # Initiate argument parser
     parser = argparse.ArgumentParser(
         description="Split the dataset into train, test and validation directory"
     )
     parser.add_argument(
-        "-i",
+        "-dir",
         "--inputDir",
         help="Path to the folder where the input images are stored",
         type=str
     )
     parser.add_argument(
         "-I",
-        "--initialSplit",
+        "--iteration",
         help="Path to the folder where the input images are stored",
         action='store_true'
     )
@@ -165,7 +167,9 @@ def main():
     total_images = get_total_images(args.inputDir)
     print("Total Images: ",total_images)
 
-    if args.initialSplit:
+    ITERATION = args.iteration
+
+    if args.iteration==1:
         INITIAL_SPLIT = True
         selection_ratio = 0.15
     else:
