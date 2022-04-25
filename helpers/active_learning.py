@@ -77,13 +77,13 @@ def split_ratio(selected_for_training):
 
 def write_selected_files(train_fileames, val_fileames, test_fileames):
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    with open(ROOT_DIR +'train_iter'+timestr+'.txt', 'w') as f:
+    with open(ROOT_DIR +'train_iteration'+ITERATION+'.txt', 'w') as f:
         for name in train_fileames:
             f.write("%s\n" % name)
-    with open(ROOT_DIR +'validation_'+timestr+'.txt', 'w') as f:
+    with open(ROOT_DIR +'validation_iteration'+ITERATION+'.txt', 'w') as f:
         for name in val_fileames:
             f.write("%s\n" % name)
-    with open(ROOT_DIR +'test_'+timestr+'.txt', 'w') as f:
+    with open(ROOT_DIR +'test_iteration'+ITERATION+'.txt', 'w') as f:
         for name in test_fileames:
             f.write("%s\n" % name)        
 
@@ -158,7 +158,7 @@ def main():
         "-I",
         "--iteration",
         help="Path to the folder where the input images are stored",
-        action='store_true'
+        type=int
     )
     args = parser.parse_args()
     assert os.path.isdir(args.inputDir)
