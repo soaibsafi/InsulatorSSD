@@ -76,7 +76,6 @@ def split_ratio(selected_for_training):
     return good_conf_files+avg_conf_files+bad_conf_files+lab_conf_files
 
 def write_selected_files(train_fileames, val_fileames, test_fileames):
-    timestr = time.strftime("%Y%m%d-%H%M%S")
     with open(ROOT_DIR +'train_iteration'+ITERATION+'.txt', 'w') as f:
         for name in train_fileames:
             f.write("%s\n" % name)
