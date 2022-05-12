@@ -59,7 +59,7 @@ def split_ratio(selected_for_training):
     for f in fn:
         files.append(BAD_CONF_DIR+f)
     files = set(files).difference(previous_files)
-    bad_conf_ratio = int(selected_for_training * 0.15)
+    bad_conf_ratio = int(selected_for_training * 0.10)
     bad_conf_files = random.sample(files, bad_conf_ratio)
     print("Bad Confidence: ", len(bad_conf_files))
 
@@ -69,7 +69,7 @@ def split_ratio(selected_for_training):
     for f in fn:
         files.append(LAB_CONF_DIR+f)
     files = set(files).difference(previous_files)
-    lab_conf_ratio = int(selected_for_training * 0.10)
+    lab_conf_ratio = int(selected_for_training * 0.15)
     lab_conf_files = random.sample(files, lab_conf_ratio)
     print("Lab Confidence: ", len(lab_conf_files))
 
