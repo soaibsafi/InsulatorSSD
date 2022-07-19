@@ -16,7 +16,7 @@ tf.get_logger().setLevel('ERROR')           # Suppress TensorFlow logging
 PATH_TO_SAVED_MODEL = 'data/saved_model'
 PATH_TO_LABELS = "data/record/label_map.pbtxt"
 SCORE_THRESHOLD = 0.5
-IMAGE_DIR = 'data/test'
+IMAGE_DIR = 'data/Average'
 SAVE_DIR = 'log/Evaluated_Images'
 
 
@@ -75,8 +75,8 @@ for image in images:
         min_score_thresh=SCORE_THRESHOLD,
         agnostic_mode=False)
 
-    cv2.imwrite(image, cv2.resize(image_np_with_detections, (800, 600)))
-    cv2.imshow('Insulator Detection', cv2.resize(image_np_with_detections, (800, 600)))
+    cv2.imwrite(image, cv2.resize(image_np_with_detections, (640, 640)))
+    cv2.imshow('Insulator Detection', cv2.resize(image_np_with_detections, (640, 640)))
 
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break

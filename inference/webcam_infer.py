@@ -31,7 +31,7 @@ print('Model Loaded. Took {} seconds'.format(elapsed_time))
 category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
 
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 while True:
     ret, image_np = cap.read()
 
@@ -39,6 +39,7 @@ while True:
     input_tensor = tf.convert_to_tensor(image_np)
     # The model expects a batch of images, so add an axis with `tf.newaxis`.
     input_tensor = input_tensor[tf.newaxis, ...]
+    start_time = time.time()
     detections = detect_fn(input_tensor)
 
 
@@ -49,9 +50,12 @@ while True:
 
     detections['num_detections'] = num_detections
     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print('FPS: %s'%(1/elapsed_time))
     image_np_with_detections = image_np.copy()
     # visualize
-    print(detections['detection_scores'])
+    #print(detections['detection_scores'])
     # https://github.com/tensorflow/models/blob/master/research/object_detection/utils/visualization_utils.py#L1101
     viz_utils.visualize_boxes_and_labels_on_image_array(
           image_np_with_detections,

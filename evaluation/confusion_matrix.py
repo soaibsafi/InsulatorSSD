@@ -15,7 +15,7 @@ import json
 categories = json.loads(category)
     
     
-IOU_THRESHOLD = 0.95
+IOU_THRESHOLD = 0.5
 CONFIDENCE_THRESHOLD = 0.5
 def compute_iou(groundtruth_box, detection_box):
     g_xmin, g_ymin, g_xmax, g_ymax = tuple(groundtruth_box)
